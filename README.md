@@ -92,7 +92,7 @@ GBK拼音简码：
 该项目在汪思言大神的NPinYin项目基础上进行修改:
 
 项目链接: 
-这些都是2010年以前的方案，至少还有大侠在为汉字转拼音不断努力着，目前发现最完美的就是NPINYIN，在googlecode可以看到它的开源项目，http://code.google.com/p/npinyin/
+这些都是2010年以前的方案，在googlecode可以看到它的开源项目，http://code.google.com/p/npinyin/
 不能识别的字很少，而且还在不断维护更新，日趋完美，推荐大家使用。
 下载地址
 dll：http://files.cnblogs.com/files/guohu/NPinyin-0.2.4588.20158-bin.zip
