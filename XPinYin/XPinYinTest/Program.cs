@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using XPinYin;
+using YuWan.XPinYin;
 
-namespace NPinYinTest
+namespace XPinYinTest
 {
     class Program
     {
