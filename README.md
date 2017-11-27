@@ -1,7 +1,5 @@
 # XPinYin
 
-目前该项目已经调整合并到该项目中:https://github.com/Dygood/Common.ClassLib
-
 实现汉字到拼音,拼音到汉字的转码
 
  * XPinYin包含一个公开类Pinyin，该类实现了取汉字文本首字母、文本对应拼音、以及
