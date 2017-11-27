@@ -7,8 +7,8 @@
     <ProjectGuid>{CCAE50CD-4F16-4A65-B7E5-D6EB8607D92A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XPinYin</RootNamespace>
-    <AssemblyName>XPinYin</AssemblyName>
+    <RootNamespace>YuWan.XPinYin</RootNamespace>
+    <AssemblyName>YuWan.XPinYin</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
