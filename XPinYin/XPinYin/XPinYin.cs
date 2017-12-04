@@ -42,6 +42,7 @@ namespace YuWan
         public static class PinYin
         {
             #region 取文本的拼音首字母
+
             /// <summary>
             /// 取中文文本的拼音首字母
             /// </summary>
@@ -50,10 +51,10 @@ namespace YuWan
             public static string GetInitials(string text)
             {
                 text = text.Trim();
-                StringBuilder chars = new StringBuilder();
-                for (int i = 0; i < text.Length; ++i)
+                var chars = new StringBuilder();
+                foreach (var t in text)
                 {
-                    string py = GetPinYin(text[i]);
+                    var py = GetPinYin(t);
                     if (py != "")
                         chars.Append(py[0].ToString().ToUpper());
                 }
@@ -69,10 +70,10 @@ namespace YuWan
             public static string GetInitials(string text, char defaultstr)
             {
                 text = text.Trim();
-                StringBuilder chars = new StringBuilder();
-                for (int i = 0; i < text.Length; ++i)
+                var chars = new StringBuilder();
+                foreach (var t in text)
                 {
-                    string py = GetPinYin(text[i], defaultstr);
+                    var py = GetPinYin(t, defaultstr);
                     if (py != "")
                         chars.Append(py[0].ToString().ToUpper());
                     else
@@ -87,11 +88,8 @@ namespace YuWan
             /// <param name="text">文本</param>
             /// <param name="encoding">源文本的编码</param>
             /// <returns>返回Encoding编码类型中文对应的拼音首字母</returns>
-            public static string GetInitials(string text, Encoding encoding)
-            {
-                string temp = ConvertEncoding(text, encoding, Encoding.UTF8);
-                return ConvertEncoding(GetInitials(temp), Encoding.UTF8, encoding);
-            }
+            public static string GetInitials(string text, Encoding encoding) =>
+                ConvertEncoding(GetInitials(ConvertEncoding(text, encoding, Encoding.UTF8)), Encoding.UTF8, encoding);
 
             /// <summary>
             /// 取中文文本的拼音首字母
@@ -100,14 +98,13 @@ namespace YuWan
             /// <param name="defaultstr">转换失败后返回的预设字符</param>
             /// <param name="encoding">源文本的编码</param>
             /// <returns>返回Encoding编码类型中文对应的拼音首字母</returns>
-            public static string GetInitials(string text, char defaultstr, Encoding encoding)
-            {
-                string temp = ConvertEncoding(text, encoding, Encoding.UTF8);
-                return ConvertEncoding(GetInitials(temp, defaultstr), Encoding.UTF8, encoding);
-            }
+            public static string GetInitials(string text, char defaultstr, Encoding encoding) => 
+                ConvertEncoding(GetInitials(ConvertEncoding(text, encoding, Encoding.UTF8), defaultstr), Encoding.UTF8, encoding);
+
             #endregion
 
             #region 获取文本拼音
+
             /// <summary>
             /// 取中文文本的拼音
             /// </summary>
@@ -115,10 +112,10 @@ namespace YuWan
             /// <returns>返回中文文本的拼音</returns>
             public static string GetPinYin(string text)
             {
-                StringBuilder sbPinyin = new StringBuilder();
-                for (int i = 0; i < text.Length; ++i)
+                var sbPinyin = new StringBuilder();
+                foreach (var t in text)
                 {
-                    string py = GetPinYin(text[i]);
+                    var py = GetPinYin(t);
                     if (py != "")
                         sbPinyin.Append(py);
                 }
@@ -133,10 +130,10 @@ namespace YuWan
             /// <returns>返回中文文本的拼音</returns>
             public static string GetPinYin(string text, char defaultstr)
             {
-                StringBuilder sbPinyin = new StringBuilder();
-                for (int i = 0; i < text.Length; ++i)
+                var sbPinyin = new StringBuilder();
+                foreach (var t in text)
                 {
-                    string py = GetPinYin(text[i], defaultstr);
+                    var py = GetPinYin(t, defaultstr);
                     if (py != "")
                         sbPinyin.Append(py);
                     else
@@ -153,15 +150,16 @@ namespace YuWan
             public static string GetPinYin(char ch)
             {
                 //是否是标点符号,控制符,10进制数字,空格,小写字母,大写字母,特殊符号,分隔符
-                if (char.IsPunctuation(ch) | char.IsControl(ch) | char.IsDigit(ch) | char.IsWhiteSpace(ch) | char.IsLower(ch) | char.IsUpper(ch) | char.IsSymbol(ch) | char.IsSeparator(ch))
+                if (char.IsPunctuation(ch) | char.IsControl(ch) | char.IsDigit(ch) | char.IsWhiteSpace(ch) |
+                    char.IsLower(ch) | char.IsUpper(ch) | char.IsSymbol(ch) | char.IsSeparator(ch))
                     return ch.ToString();
-                short hash = GetHashIndex(ch);
-                for (int i = 0; i < XPyHash.hashes[hash].Length; ++i)
+                var hash = GetHashIndex(ch);
+                for (var i = 0; i < XPyHash.Hashes[hash].Length; ++i)
                 {
-                    short index = XPyHash.hashes[hash][i];
-                    int pos = XPyCode.codes[index].IndexOf(ch, 7);
+                    var index = XPyHash.Hashes[hash][i];
+                    var pos = XPyCode.Codes[index].IndexOf(ch, 7);
                     if (pos != -1)
-                        return XPyCode.codes[index].Substring(0, 6).Trim() + " ";
+                        return XPyCode.Codes[index].Substring(0, 6).Trim() + " ";
                 }
                 return ch.ToString();
             }
@@ -175,15 +173,16 @@ namespace YuWan
             public static string GetPinYin(char ch, char defaultstr)
             {
                 //是否是标点符号,控制符,10进制数字,空格,小写字母,大写字母,特殊符号,分隔符
-                if (char.IsPunctuation(ch) | char.IsControl(ch) | char.IsDigit(ch) | char.IsWhiteSpace(ch) | char.IsLower(ch) | char.IsUpper(ch) | char.IsSymbol(ch) | char.IsSeparator(ch))
+                if (char.IsPunctuation(ch) | char.IsControl(ch) | char.IsDigit(ch) | char.IsWhiteSpace(ch) |
+                    char.IsLower(ch) | char.IsUpper(ch) | char.IsSymbol(ch) | char.IsSeparator(ch))
                     return ch.ToString();
-                short hash = GetHashIndex(ch);
-                for (int i = 0; i < XPyHash.hashes[hash].Length; ++i)
+                var hash = GetHashIndex(ch);
+                for (var i = 0; i < XPyHash.Hashes[hash].Length; ++i)
                 {
-                    short index = XPyHash.hashes[hash][i];
-                    int pos = XPyCode.codes[index].IndexOf(ch, 7);
+                    var index = XPyHash.Hashes[hash][i];
+                    var pos = XPyCode.Codes[index].IndexOf(ch, 7);
                     if (pos != -1)
-                        return XPyCode.codes[index].Substring(0, 6).Trim() + " ";
+                        return XPyCode.Codes[index].Substring(0, 6).Trim() + " ";
                 }
                 return defaultstr.ToString();
             }
@@ -194,11 +193,8 @@ namespace YuWan
             /// <param name="text">编码为UTF8的文本</param>
             /// <param name="encoding">源文本的编码</param>
             /// <returns>返回Encoding编码类型的中文文本的拼音</returns>
-            public static string GetPinYin(string text, Encoding encoding)
-            {
-                string temp = ConvertEncoding(text.Trim(), encoding, Encoding.UTF8);
-                return ConvertEncoding(GetPinYin(temp), Encoding.UTF8, encoding);
-            }
+            public static string GetPinYin(string text, Encoding encoding) => 
+                ConvertEncoding(GetPinYin(ConvertEncoding(text.Trim(), encoding, Encoding.UTF8)), Encoding.UTF8, encoding);
 
             /// <summary>
             /// 取中文文本的拼音
@@ -207,16 +203,14 @@ namespace YuWan
             /// <param name="defaultstr">转换失败后返回的字符</param>
             /// <param name="encoding">源文本的编码</param>
             /// <returns>返回Encoding编码类型的中文文本的拼音</returns>
-            public static string GetPinYin(string text, char defaultstr, Encoding encoding)
-            {
-                string temp = ConvertEncoding(text.Trim(), encoding, Encoding.UTF8);
-                return ConvertEncoding(GetPinYin(temp, defaultstr), Encoding.UTF8, encoding);
-            }
+            public static string GetPinYin(string text, char defaultstr, Encoding encoding) => 
+                ConvertEncoding(GetPinYin(ConvertEncoding(text.Trim(), encoding, Encoding.UTF8), defaultstr), Encoding.UTF8, encoding);
 
             /// <summary>
             /// 返回单个字符的汉字拼音
             /// </summary>
             /// <param name="ch">编码为Encoding的中文字符</param>
+            /// <param name="encoding">源字符编码</param>
             /// <returns>编码为Encoding的ch对应的拼音</returns>
             public static string GetPinYin(char ch, Encoding encoding)
             {
@@ -229,24 +223,27 @@ namespace YuWan
             /// </summary>
             /// <param name="defaultstr">当转换失败后返回的字符</param>
             /// <param name="ch">编码为Encoding的中文字符</param>
+            /// <param name="encoding">源字符编码</param>
             /// <returns>编码为Encoding的ch对应的拼音</returns>
             public static string GetPinYin(char ch, char defaultstr, Encoding encoding)
             {
                 ch = ConvertEncoding(ch.ToString(), encoding, Encoding.UTF8)[0];
                 return ConvertEncoding(GetPinYin(ch, defaultstr), Encoding.UTF8, encoding);
             }
+
             #endregion
 
             #region 根据拼音获取汉字列表
+
             /// <summary>
             /// 取和拼音相同的汉字列表
             /// </summary>
-            /// <param name="Pinyin">编码为UTF8的拼音</param>
+            /// <param name="pinyin">编码为UTF8的拼音</param>
             /// <returns>取拼音相同的汉字列表，如拼音“ai”将会返回“唉爱……”等</returns>
             public static string GetChineseText(string pinyin)
             {
-                string key = pinyin.Trim().ToLower();
-                foreach (string str in XPyCode.codes)
+                var key = pinyin.Trim().ToLower();
+                foreach (var str in XPyCode.Codes)
                 {
                     if (str.StartsWith(key + " ") || str.StartsWith(key + ":"))
                         return str.Substring(7);
@@ -257,17 +254,17 @@ namespace YuWan
             /// <summary>
             /// 取和拼音相同的汉字列表，编码同参数encoding
             /// </summary>
-            /// <param name="Pinyin">编码为encoding的拼音</param>
+            /// <param name="pinyin">编码为encoding的拼音</param>
             /// <param name="encoding">编码</param>
             /// <returns>返回编码为encoding的拼音为pinyin的汉字列表，如拼音“ai”将会返回“唉爱……”等</returns>
-            public static string GetChineseText(string pinyin, Encoding encoding)
-            {
-                string text = ConvertEncoding(pinyin, encoding, Encoding.UTF8);
-                return ConvertEncoding(GetChineseText(text), Encoding.UTF8, encoding);
-            }
+            public static string GetChineseText(string pinyin, Encoding encoding) =>
+                ConvertEncoding(GetChineseText(ConvertEncoding(pinyin, encoding, Encoding.UTF8)), Encoding.UTF8,
+                    encoding);
+
             #endregion
 
             #region 转换文本字符集编码
+
             /// <summary>
             /// 转换编码
             /// </summary>
@@ -275,24 +272,20 @@ namespace YuWan
             /// <param name="srcEncoding">源编码</param>
             /// <param name="dstEncoding">目标编码</param>
             /// <returns>目标编码文本</returns>
-            public static string ConvertEncoding(string text, Encoding srcEncoding, Encoding dstEncoding)
-            {
-                byte[] srcBytes = srcEncoding.GetBytes(text);
-                byte[] dstBytes = Encoding.Convert(srcEncoding, dstEncoding, srcBytes);
-                return dstEncoding.GetString(dstBytes);
-            }
+            public static string ConvertEncoding(string text, Encoding srcEncoding, Encoding dstEncoding) =>
+                dstEncoding.GetString(Encoding.Convert(srcEncoding, dstEncoding, srcEncoding.GetBytes(text)));
+
             #endregion
 
             #region 获取文本索引
+
             /// <summary>
             /// 取文本索引值
             /// </summary>
             /// <param name="ch">字符</param>
             /// <returns>文本索引值</returns>
-            private static short GetHashIndex(char ch)
-            {
-                return (short)((uint)ch % XPyCode.codes.Length);
-            }
+            private static short GetHashIndex(char ch) => (short) ((uint) ch % XPyCode.Codes.Length);
+
             #endregion
         }
     }
