@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using YuWan.XPinYin;
+using Miraclesoft.XPinYin;
 
 namespace XPinYinTest
 {

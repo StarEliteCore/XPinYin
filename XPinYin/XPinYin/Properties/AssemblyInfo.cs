@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("YuWan.XPinYin")]
+[assembly: AssemblyTitle("Miraclesoft.XPinYin")]
 [assembly: AssemblyDescription("实现常用汉字到拼音及拼音到汉字的转换")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("YuWan.XPinYin")]
+[assembly: AssemblyProduct("Miraclesoft.XPinYin")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
