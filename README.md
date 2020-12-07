@@ -1,5 +1,8 @@
 # XPinYin
 
+代码迁移到了 https://github.com/joesdu/Miracle.Common.Utility
+请使用新的项目
+
 实现汉字到拼音,拼音到汉字的转码
 
  * XPinYin包含一个公开类Pinyin，该类实现了取汉字文本首字母、文本对应拼音、以及
